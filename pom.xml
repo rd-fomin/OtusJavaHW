@@ -28,6 +28,7 @@
         <module>hw05-framework</module>
         <module>hw06-atm</module>
         <module>hw07-atmdepartment</module>
+        <module>hw08-diygson</module>
     </modules>
 
     <properties>
