@@ -19,9 +19,11 @@
             <name>Roman Fomin</name>
         </developer>
     </developers>
+
     <modules>
         <module>hw01-maven</module>
         <module>hw02-diyarraylist</module>
+        <module>hw03-gc</module>
     </modules>
 
     <properties>
