@@ -19,6 +19,9 @@
             <name>Roman Fomin</name>
         </developer>
     </developers>
+    <modules>
+        <module>hw01-maven</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
