@@ -11,14 +11,16 @@ import java.util.List;
 
 public class DbExecutor<T> {
     private static final String URL = "jdbc:h2:mem:";
-    private static Logger logger = LoggerFactory.getLogger(User.class);
+    private static Logger logger = LoggerFactory.getLogger(Object.class);
     private final Connection connection;
+    private final String bdName;
 
-    public DbExecutor() throws SQLException {
+    public DbExecutor(Class<T> tClass) throws SQLException {
         this.connection = DriverManager.getConnection(URL);
         this.connection.setAutoCommit(false);
+        this.bdName = tClass.getSimpleName().toLowerCase();
         try (PreparedStatement pst = connection.prepareStatement(
-                "create table user(id bigint(20) NOT NULL auto_increment, name varchar(255), age int(3))")
+                "create table " + bdName + "(id bigint(20) NOT NULL auto_increment, name varchar(255), age int(3))")
         ) {
             pst.executeUpdate();
         }
@@ -40,7 +42,7 @@ public class DbExecutor<T> {
             }
         }
         if (id < 0) throw new SQLException();
-        try (PreparedStatement pst = connection.prepareStatement("insert into user(id, name, age) values (?, ?, ?)")) {
+        try (PreparedStatement pst = connection.prepareStatement("insert into " + bdName + "(id, name, age) values (?, ?, ?)")) {
             Savepoint savePoint = this.connection.setSavepoint("savePointName");
             pst.setLong(1, id);
             pst.setString(2, (String) list.get(0));
@@ -72,7 +74,7 @@ public class DbExecutor<T> {
             }
         }
         if (id < 0) throw new SQLException();
-        try (PreparedStatement pst = connection.prepareStatement("update user set name = ?, age = ? where id = ?")) {
+        try (PreparedStatement pst = connection.prepareStatement("update " + bdName + " set name = ?, age = ? where id = ?")) {
             Savepoint savePoint = this.connection.setSavepoint("savePointName");
             pst.setString(1, (String) list.get(0));
             pst.setInt(2, (int) list.get(1));
@@ -101,7 +103,7 @@ public class DbExecutor<T> {
             }
         }
         if (id < 0) throw new SQLException();
-        try (PreparedStatement pst = connection.prepareStatement("select id from user where id = ?")) {
+        try (PreparedStatement pst = connection.prepareStatement("select id from " + bdName + " where id = ?")) {
             pst.setLong(1, id);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next())
@@ -122,7 +124,7 @@ public class DbExecutor<T> {
             e.printStackTrace();
         }
         Field[] fields = clazz.getDeclaredFields();
-        try (PreparedStatement pst = this.connection.prepareStatement("select * from user where id = ?")) {
+        try (PreparedStatement pst = this.connection.prepareStatement("select * from " + bdName + " where id = ?")) {
             pst.setLong(1, id);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {

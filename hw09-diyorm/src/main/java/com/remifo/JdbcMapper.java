@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class JdbcMapper<T> {
     private DbExecutor<T> dbExecutor;
 
-    public JdbcMapper() throws SQLException {
+    public JdbcMapper(Class<T> tClass) throws SQLException {
         super();
-        dbExecutor = new DbExecutor<>();
+        dbExecutor = new DbExecutor<>(tClass);
     }
 
     void create(T t) throws SQLException, IllegalAccessException {
