@@ -5,26 +5,27 @@ import com.remifo.Id;
 public class Account {
 
     @Id
-    private long first;
-    private String name;
-    private int age;
+    private long no;
+    private String type;
+    private int rest;
 
     public Account() {
 
     }
 
-    public Account(long first, String name, int age) {
-        this.first = first;
-        this.name = name;
-        this.age = age;
+    public Account(long no, String type, int rest) {
+        this.no = no;
+        this.type = type;
+        this.rest = rest;
     }
 
     @Override
     public String toString() {
         return "Account{" +
-                "first=" + first +
-                ", name='" + name + '\'' +
-                ", age=" + age +
+                "no=" + no +
+                ", type='" + type + '\'' +
+                ", rest=" + rest +
                 '}';
     }
+
 }

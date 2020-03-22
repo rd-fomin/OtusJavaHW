@@ -1,6 +1,5 @@
 package com.remifo;
 
-import com.remifo.test.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +13,19 @@ public class DbExecutor<T> {
     private static Logger logger = LoggerFactory.getLogger(Object.class);
     private final Connection connection;
     private final String bdName;
+    private final String[] params;
 
     public DbExecutor(Class<T> tClass) throws SQLException {
         this.connection = DriverManager.getConnection(URL);
         this.connection.setAutoCommit(false);
         this.bdName = tClass.getSimpleName().toLowerCase();
+        this.params = new String[3];
+        Field[] fields = tClass.getDeclaredFields();
+        for (int i = 0; i < params.length; i++) {
+            params[i] = fields[i].getName().toLowerCase();
+        }
         try (PreparedStatement pst = connection.prepareStatement(
-                "create table " + bdName + "(id bigint(20) NOT NULL auto_increment, name varchar(255), age int(3))")
+                "create table " + bdName + "(" + params[0] + " bigint(20) NOT NULL auto_increment, " + params[1] + " varchar(255), " + params[2] + " int(3))")
         ) {
             pst.executeUpdate();
         }
@@ -42,7 +47,7 @@ public class DbExecutor<T> {
             }
         }
         if (id < 0) throw new SQLException();
-        try (PreparedStatement pst = connection.prepareStatement("insert into " + bdName + "(id, name, age) values (?, ?, ?)")) {
+        try (PreparedStatement pst = connection.prepareStatement("insert into " + bdName + "(" + params[0] + ", " + params[1] + ", " + params[2] + ") values (?, ?, ?)")) {
             Savepoint savePoint = this.connection.setSavepoint("savePointName");
             pst.setLong(1, id);
             pst.setString(2, (String) list.get(0));
@@ -74,7 +79,7 @@ public class DbExecutor<T> {
             }
         }
         if (id < 0) throw new SQLException();
-        try (PreparedStatement pst = connection.prepareStatement("update " + bdName + " set name = ?, age = ? where id = ?")) {
+        try (PreparedStatement pst = connection.prepareStatement("update " + bdName + " set " + params[1] + " = ?, " + params[2] + " = ? where " + params[0] + " = ?")) {
             Savepoint savePoint = this.connection.setSavepoint("savePointName");
             pst.setString(1, (String) list.get(0));
             pst.setInt(2, (int) list.get(1));
@@ -103,7 +108,7 @@ public class DbExecutor<T> {
             }
         }
         if (id < 0) throw new SQLException();
-        try (PreparedStatement pst = connection.prepareStatement("select id from " + bdName + " where id = ?")) {
+        try (PreparedStatement pst = connection.prepareStatement("select " + params[0] + " from " + bdName + " where " + params[0] + " = ?")) {
             pst.setLong(1, id);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next())
@@ -124,7 +129,7 @@ public class DbExecutor<T> {
             e.printStackTrace();
         }
         Field[] fields = clazz.getDeclaredFields();
-        try (PreparedStatement pst = this.connection.prepareStatement("select * from " + bdName + " where id = ?")) {
+        try (PreparedStatement pst = this.connection.prepareStatement("select * from " + bdName + " where " + params[0] + " = ?")) {
             pst.setLong(1, id);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
