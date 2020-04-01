@@ -30,12 +30,11 @@ public class DaoJdbc<T> implements UserDao<T> {
 
 
   @Override
-  public Optional<T> findById(long id) {
+  public Optional<T> findById(long id, Class<T> tClass) {
     try {
-      Class<T> clazz = (Class<T>) ((T) new Object()).getClass();
       List<Field> fields = new ArrayList<>();
       Field idField = null;
-      for (Field field : clazz.getDeclaredFields()) {
+      for (Field field : tClass.getDeclaredFields()) {
         field.setAccessible(true);
         if (!field.isAnnotationPresent(Id.class)) {
           fields.add(field);
@@ -43,22 +42,21 @@ public class DaoJdbc<T> implements UserDao<T> {
           idField = field;
         }
       }
-      Field finalIdField = idField;
+      T t = tClass.newInstance();
+      idField.set(t, id);
       return dbExecutor.selectRecord(getConnection(),
-              "select * from " + clazz.getSimpleName().toLowerCase() + " where " + idField + "  = ?",
+              "select * from " + tClass.getSimpleName().toLowerCase() + " where " + idField.getName() + "  = ?",
               id,
               resultSet -> {
         try {
           if (resultSet.next()) {
-            T t = clazz.newInstance();
-            finalIdField.set(t, id);
-            fields.get(0).set(t, resultSet.getObject("name"));
-            fields.get(1).set(t, resultSet.getObject("age"));
+            fields.get(0).set(t, resultSet.getObject(fields.get(0).getName()));
+            fields.get(1).set(t, resultSet.getObject(fields.get(1).getName()));
             return t;
           }
         } catch (SQLException e) {
           logger.error(e.getMessage(), e);
-        } catch (IllegalAccessException | InstantiationException e) {
+        } catch (IllegalAccessException e) {
           e.printStackTrace();
         }
         return null;

@@ -4,8 +4,8 @@ import java.util.Optional;
 
 public interface DBServiceUser<T> {
 
-  long saveUser(T t);
+  long saveObject(T t);
 
-  Optional<T> getObject(long id);
+  Optional<T> getObject(long id, Class<T> tClass);
 
 }

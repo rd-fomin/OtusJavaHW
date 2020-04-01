@@ -17,7 +17,7 @@ public class DbServiceUserImpl<T> implements DBServiceUser<T> {
   }
 
   @Override
-  public long saveUser(T t) {
+  public long saveObject(T t) {
     try (SessionManager sessionManager = userDao.getSessionManager()) {
       sessionManager.beginSession();
       try {
@@ -36,11 +36,11 @@ public class DbServiceUserImpl<T> implements DBServiceUser<T> {
 
 
   @Override
-  public Optional<T> getObject(long id) {
+  public Optional<T> getObject(long id, Class<T> tClass) {
     try (SessionManager sessionManager = userDao.getSessionManager()) {
       sessionManager.beginSession();
       try {
-        Optional<T> userOptional = userDao.findById(id);
+        Optional<T> userOptional = userDao.findById(id, tClass);
         logger.info("user: {}", userOptional.orElse(null));
         return userOptional;
       } catch (Exception e) {

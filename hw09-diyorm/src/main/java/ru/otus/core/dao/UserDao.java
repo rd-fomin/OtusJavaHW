@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface UserDao<T> {
 
-  Optional<T> findById(long id);
+  Optional<T> findById(long id, Class<T> tClass);
 
   long saveObject(T t);
 
