@@ -7,14 +7,17 @@ import javax.persistence.*;
 public class AddressDataSet {
 
     @Id
-    @Column(name = "address_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @PrimaryKeyJoinColumn(name = "street")
+    @Column(name = "street", nullable = false, unique = true)
     private String street;
 
-    public AddressDataSet(String street) {
+    public AddressDataSet() {  }
+
+    public AddressDataSet(long id, String street) {
+        this.id = id;
         this.street = street;
     }
 

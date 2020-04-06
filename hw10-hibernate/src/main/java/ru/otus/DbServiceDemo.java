@@ -33,7 +33,7 @@ public class DbServiceDemo {
                     0,
                     "Вася",
                     20,
-                    new AddressDataSet("My Address"),
+                    new AddressDataSet(1, "My Address"),
                     List.of( new PhoneDataSet("My Phone") )
                 )
         );
@@ -44,7 +44,7 @@ public class DbServiceDemo {
                     1L,
                     "А! Нет. Это же совсем не Вася",
                     20,
-                    new AddressDataSet("My Address"),
+                    new AddressDataSet(1, "My Address"),
                     List.of( new PhoneDataSet("My Phone") )
                 )
         );

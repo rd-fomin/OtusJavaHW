@@ -8,17 +8,21 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
     @Column(name = "name")
     private String name;
     @Column(name = "age")
     private int age;
-    @OneToOne(optional = false, mappedBy = "street")
+    @OneToOne(targetEntity = AddressDataSet.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private AddressDataSet addressDataSet;
-    @OneToMany(mappedBy = "number")
+    @OneToMany(targetEntity = PhoneDataSet.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "phone_id")
     private List<PhoneDataSet> phoneDataSets;
+
+    public User() {  }
 
     public User(long id, String name, int age, AddressDataSet addressDataSet, List<PhoneDataSet> phoneDataSets) {
         this.id = id;

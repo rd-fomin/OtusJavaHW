@@ -7,12 +7,14 @@ import javax.persistence.*;
 public class PhoneDataSet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
     @Column(name = "number")
     private String number;
+
+    public PhoneDataSet() {  }
 
     public PhoneDataSet(String number) {
         this.number = number;
