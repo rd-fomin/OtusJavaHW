@@ -3,21 +3,30 @@ package ru.otus.core.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "phones")
+@Table(name = "phone")
 public class PhoneDataSet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "number")
+    @Column(name = "number", nullable = false, unique = true)
     private String number;
 
     public PhoneDataSet() {  }
 
-    public PhoneDataSet(String number) {
+    public PhoneDataSet(long id, String number) {
+        this.id = id;
         this.number = number;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getNumber() {
+        return number;
     }
 
     @Override

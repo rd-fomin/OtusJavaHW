@@ -3,7 +3,7 @@ package ru.otus.core.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "addresses")
+@Table(name = "address")
 public class AddressDataSet {
 
     @Id

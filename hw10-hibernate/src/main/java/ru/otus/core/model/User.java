@@ -15,11 +15,13 @@ public class User {
     private String name;
     @Column(name = "age")
     private int age;
-    @OneToOne(targetEntity = AddressDataSet.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private AddressDataSet addressDataSet;
-    @OneToMany(targetEntity = PhoneDataSet.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "phone_id")
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "phone_id", referencedColumnName = "id")
     private List<PhoneDataSet> phoneDataSets;
 
     public User() {  }

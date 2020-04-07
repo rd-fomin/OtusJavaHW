@@ -21,7 +21,7 @@ public class DbServiceDemo {
 
     public static void main(String[] args) {
         // Все главное см в тестах
-        SessionFactory sessionFactory = HibernateUtils.buildSessionFactory("hibernate.cfg.xml", User.class);
+        SessionFactory sessionFactory = HibernateUtils.buildSessionFactory("hibernate.cfg.xml", User.class, AddressDataSet.class, PhoneDataSet.class);
 
         SessionManagerHibernate sessionManager = new SessionManagerHibernate(sessionFactory);
         UserDao<User> userDao = new UserDaoHibernate<>(sessionManager);
@@ -34,7 +34,7 @@ public class DbServiceDemo {
                     "Вася",
                     20,
                     new AddressDataSet(1, "My Address"),
-                    List.of( new PhoneDataSet("My Phone") )
+                    List.of( new PhoneDataSet(1, "My Phone") )
                 )
         );
         Optional<User> mayBeCreatedUser = dbServiceUser.getObject(id, User.class);
@@ -45,18 +45,18 @@ public class DbServiceDemo {
                     "А! Нет. Это же совсем не Вася",
                     20,
                     new AddressDataSet(1, "My Address"),
-                    List.of( new PhoneDataSet("My Phone") )
+                    List.of( new PhoneDataSet(1, "My Phone") )
                 )
         );
         Optional<User> mayBeUpdatedUser = dbServiceUser.getObject(id, User.class);
 
-        outputUserOptional("Created user", mayBeCreatedUser);
-        outputUserOptional("Updated user", mayBeUpdatedUser);
+        outputUserOptional("Created object", mayBeCreatedUser);
+        outputUserOptional("Updated object", mayBeUpdatedUser);
     }
 
-    private static void outputUserOptional(String header, Optional<User> mayBeUser) {
+    private static <T> void outputUserOptional(String header, Optional<T> mayBeUser) {
         System.out.println("-----------------------------------------------------------");
         System.out.println(header);
-        mayBeUser.ifPresentOrElse(System.out::println, () -> logger.info("User not found"));
+        mayBeUser.ifPresentOrElse(System.out::println, () -> logger.info("Object not found"));
     }
 }

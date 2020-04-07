@@ -23,7 +23,6 @@ public class DbServiceUserImpl<T> implements DBServiceUser<T> {
             try {
                 long userId = userDao.saveObject(t);
                 sessionManager.commitSession();
-
                 logger.info("created user: {}", userId);
                 return userId;
             } catch (Exception e) {
