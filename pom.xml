@@ -31,6 +31,7 @@
         <module>hw08-diygson</module>
         <module>hw09-diyorm</module>
         <module>hw10-hibernate</module>
+        <module>hw11-cacheengine</module>
     </modules>
 
     <properties>
