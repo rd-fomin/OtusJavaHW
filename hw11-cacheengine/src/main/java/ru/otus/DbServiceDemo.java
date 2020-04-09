@@ -28,7 +28,7 @@ public class DbServiceDemo {
         DBServiceObject<User> dbServiceObject = new DbServiceObjectImpl<>(objectDao);
 
 
-        long id = dbServiceObject.saveUser(
+        long id = dbServiceObject.saveObject(
                 new User(
                     0,
                     "Вася",
@@ -39,7 +39,7 @@ public class DbServiceDemo {
         );
         Optional<User> mayBeCreatedUser = dbServiceObject.getObject(id, User.class);
 
-        id = dbServiceObject.saveUser(
+        id = dbServiceObject.saveObject(
                 new User(
                     1L,
                     "А! Нет. Это же совсем не Вася",

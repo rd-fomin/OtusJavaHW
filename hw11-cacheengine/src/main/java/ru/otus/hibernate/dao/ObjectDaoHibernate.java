@@ -10,6 +10,9 @@ import ru.otus.core.sessionmanager.SessionManager;
 import ru.otus.hibernate.sessionmanager.DatabaseSessionHibernate;
 import ru.otus.hibernate.sessionmanager.SessionManagerHibernate;
 
+import javax.persistence.Id;
+import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Optional;
 
 public class ObjectDaoHibernate<T> implements ObjectDao<T> {
@@ -38,9 +41,15 @@ public class ObjectDaoHibernate<T> implements ObjectDao<T> {
     public long saveObject(T t) {
         DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
         try {
+            Class<?> tClass = t.getClass();
+            long id = List.of(tClass.getDeclaredFields()).stream()
+                    .filter(field -> field.isAnnotationPresent(Id.class))
+                    .peek(field -> field.setAccessible(true))
+                    .findFirst().orElseThrow().getLong(t);
             Session hibernateSession = currentSession.getHibernateSession();
             hibernateSession.merge(t);
-            return 1;
+            System.out.println(id);
+            return id;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new UserDaoException(e);

@@ -2,25 +2,32 @@ package ru.otus.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.cache.HwListener;
+import ru.otus.cache.MyCache;
 import ru.otus.core.dao.ObjectDao;
 import ru.otus.core.sessionmanager.SessionManager;
 
 import java.util.Optional;
-import java.util.WeakHashMap;
 
 public class DbServiceObjectImpl<T> implements DBServiceObject<T> {
     private static Logger logger = LoggerFactory.getLogger(DbServiceObjectImpl.class);
 
-    private final WeakHashMap<Long, Optional<T>> cache = new WeakHashMap<>();
+    private final MyCache<Long, T> cache = new MyCache<>();
 
     private final ObjectDao<T> objectDao;
 
     public DbServiceObjectImpl(ObjectDao<T> objectDao) {
         this.objectDao = objectDao;
+        cache.addListener(new HwListener<Long, T>() {
+            @Override
+            public void notify(Long key, T value, String action) {
+                logger.info("key: {}, value:{}, action:{}", key, value, action);
+            }
+        });
     }
 
     @Override
-    public long saveUser(T t) {
+    public long saveObject(T t) {
         try (SessionManager sessionManager = objectDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
@@ -39,14 +46,14 @@ public class DbServiceObjectImpl<T> implements DBServiceObject<T> {
 
     @Override
     public Optional<T> getObject(long id, Class<T> tClass) {
-        if (cache.containsKey(id))
-            return cache.get(id);
+        if (cache.get(id) != null)
+            return Optional.of(cache.get(id));
         try (SessionManager sessionManager = objectDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
                 Optional<T> objectOptional = objectDao.findById(id, tClass);
                 logger.info("object: {}", objectOptional.orElse(null));
-                cache.put(id, objectOptional);
+                cache.put(id, objectOptional.orElseThrow());
                 return objectOptional;
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
