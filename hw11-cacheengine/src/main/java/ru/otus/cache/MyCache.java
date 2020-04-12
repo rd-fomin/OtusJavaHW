@@ -9,21 +9,23 @@ import java.util.WeakHashMap;
  */
 public class MyCache<K, V> implements HwCache<K, V> {
     //Надо реализовать эти методы
-    private WeakHashMap<K, V> cache = new WeakHashMap<>();
-    private List<HwListener<K, V>> listeners = new ArrayList<>();
+    private final WeakHashMap<K, V> cache = new WeakHashMap<>();
+    private final List<HwListener<K, V>> listeners = new ArrayList<>();
 
     @Override
     public void put(K key, V value) {
-        if (!cache.containsKey(key))
+        if (!cache.containsKey(key)) {
             cache.put(key, value);
-        if (cache.containsKey(key))
             listeners.forEach(listener -> listener.notify(key, value, "put"));
+        }
     }
 
     @Override
     public void remove(K key) {
-        if (cache.remove(key) != null)
-            listeners.forEach(listener -> listener.notify(key, get(key), "remove"));
+        V value = cache.remove(key);
+        if (value != null) {
+            listeners.forEach(listener -> listener.notify(key, value, "remove"));
+        }
     }
 
     @Override

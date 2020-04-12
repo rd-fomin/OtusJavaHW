@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class DbServiceDemo {
-    private static Logger logger = LoggerFactory.getLogger(DbServiceDemo.class);
+    private static final Logger logger = LoggerFactory.getLogger(DbServiceDemo.class);
 
     public static void main(String[] args) {
         // Все главное см в тестах

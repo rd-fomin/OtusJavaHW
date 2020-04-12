@@ -32,6 +32,9 @@ public class DbServiceObjectImpl<T> implements DBServiceObject<T> {
             sessionManager.beginSession();
             try {
                 long userId = objectDao.saveObject(t);
+                if (cache.get(userId) == null) {
+                    cache.put(userId, t);
+                }
                 sessionManager.commitSession();
                 logger.info("created object: {}", userId);
                 return userId;
