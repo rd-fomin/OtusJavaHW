@@ -5,15 +5,14 @@ import org.slf4j.LoggerFactory;
 import ru.otus.core.Id;
 import ru.otus.core.dao.UserDao;
 import ru.otus.core.dao.UserDaoException;
-import ru.otus.core.sessionmanager.SessionManager;
 import ru.otus.jdbc.DbExecutor;
 import ru.otus.jdbc.sessionmanager.SessionManagerJdbc;
+import ru.otus.core.sessionmanager.SessionManager;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,6 +1,5 @@
 package ru.otus.hibernate.dao;
 
-
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import ru.otus.hibernate.sessionmanager.DatabaseSessionHibernate;
 import ru.otus.hibernate.sessionmanager.SessionManagerHibernate;
 
 import javax.persistence.Id;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 

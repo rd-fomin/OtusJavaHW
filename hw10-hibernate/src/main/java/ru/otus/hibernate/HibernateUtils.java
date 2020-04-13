@@ -11,8 +11,7 @@ import java.util.Arrays;
 
 public final class HibernateUtils {
 
-  private HibernateUtils() {
-  }
+  private HibernateUtils() {  }
 
   public static SessionFactory buildSessionFactory(String configResourceFileName,
                                                    Class<?>... annotatedClasses) {
