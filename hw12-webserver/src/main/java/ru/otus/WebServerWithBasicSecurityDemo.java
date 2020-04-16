@@ -39,13 +39,13 @@ public class WebServerWithBasicSecurityDemo {
         UserDao userDao = new InDbMemoryUserDao(sessionManager);
         DBServiceUser serviceUser = new DbServiceUserImpl(userDao);
 
-        serviceUser.save(new User(1L, "Крис Гир", "user1", "11111"));
-        serviceUser.save(new User(2L, "Ая Кэш", "user2", "11111"));
-        serviceUser.save(new User(3L, "Десмин Боргес", "user3", "11111"));
-        serviceUser.save(new User(4L, "Кетер Донохью", "user4", "11111"));
-        serviceUser.save(new User(5L, "Стивен Шнайдер", "user5", "11111"));
-        serviceUser.save(new User(6L, "Джанет Вэрни", "user6", "11111"));
-        serviceUser.save(new User(7L, "Брэндон Смит", "user7", "11111"));
+        serviceUser.save(new User("Крис Гир", "user1", "11111"));
+        serviceUser.save(new User("Ая Кэш", "user2", "11111"));
+        serviceUser.save(new User("Десмин Боргес", "user3", "11111"));
+        serviceUser.save(new User("Кетер Донохью", "user4", "11111"));
+        serviceUser.save(new User("Стивен Шнайдер", "user5", "11111"));
+        serviceUser.save(new User("Джанет Вэрни", "user6", "11111"));
+        serviceUser.save(new User("Брэндон Смит", "user7", "11111"));
 
         Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
         TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);

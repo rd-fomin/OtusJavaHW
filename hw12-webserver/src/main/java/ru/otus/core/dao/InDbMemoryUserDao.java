@@ -24,10 +24,9 @@ public class InDbMemoryUserDao implements UserDao {
     public List<User> findAll() {
         var currentSession = sessionManager.getCurrentSession();
         try {
-            var result = (List<User>) currentSession.getHibernateSession()
-                .createQuery("from users")
-                .list();
-            return result;
+            return currentSession.getHibernateSession()
+                    .createQuery("from User", User.class)
+                    .list();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -49,8 +48,8 @@ public class InDbMemoryUserDao implements UserDao {
     public Optional<User> findByLogin(String login) {
         var currentSession = sessionManager.getCurrentSession();
         try {
-            User result = (User) currentSession.getHibernateSession()
-                    .createQuery("from users where login=:login")
+            User result = currentSession.getHibernateSession()
+                    .createQuery("from User where login=:login", User.class)
                     .setParameter("login", login)
                     .list().get(0);
             return Optional.ofNullable(result);
