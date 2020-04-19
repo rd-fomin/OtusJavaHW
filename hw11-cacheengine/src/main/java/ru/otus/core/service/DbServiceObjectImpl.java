@@ -2,10 +2,10 @@ package ru.otus.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.cache.HwListener;
-import ru.otus.cache.MyCache;
 import ru.otus.core.dao.ObjectDao;
 import ru.otus.core.sessionmanager.SessionManager;
+import ru.otus.cache.HwListener;
+import ru.otus.cache.MyCache;
 
 import java.util.Optional;
 

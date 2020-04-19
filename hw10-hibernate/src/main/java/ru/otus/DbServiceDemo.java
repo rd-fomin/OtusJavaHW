@@ -3,6 +3,7 @@ package ru.otus;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.hibernate.sessionmanager.SessionManagerHibernate;
 import ru.otus.core.dao.UserDao;
 import ru.otus.core.model.AddressDataSet;
 import ru.otus.core.model.PhoneDataSet;
@@ -11,7 +12,6 @@ import ru.otus.core.service.DBServiceUser;
 import ru.otus.core.service.DbServiceUserImpl;
 import ru.otus.hibernate.HibernateUtils;
 import ru.otus.hibernate.dao.UserDaoHibernate;
-import ru.otus.hibernate.sessionmanager.SessionManagerHibernate;
 
 import java.util.List;
 import java.util.Optional;

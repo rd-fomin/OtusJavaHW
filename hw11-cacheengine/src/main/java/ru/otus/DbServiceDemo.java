@@ -9,9 +9,9 @@ import ru.otus.core.model.PhoneDataSet;
 import ru.otus.core.model.User;
 import ru.otus.core.service.DBServiceObject;
 import ru.otus.core.service.DbServiceObjectImpl;
-import ru.otus.hibernate.HibernateUtils;
 import ru.otus.hibernate.dao.ObjectDaoHibernate;
 import ru.otus.hibernate.sessionmanager.SessionManagerHibernate;
+import ru.otus.hibernate.HibernateUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +26,6 @@ public class DbServiceDemo {
         SessionManagerHibernate sessionManager = new SessionManagerHibernate(sessionFactory);
         ObjectDao<User> objectDao = new ObjectDaoHibernate<>(sessionManager);
         DBServiceObject<User> dbServiceObject = new DbServiceObjectImpl<>(objectDao);
-
 
         long id = dbServiceObject.saveObject(
                 new User(
