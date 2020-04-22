@@ -1,7 +1,9 @@
-package ru.otus.core.service;
+package ru.otus.core.service.database;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.otus.core.cache.Cache;
 import ru.otus.core.dao.UserDao;
 import ru.otus.core.sessionmanager.SessionManager;
@@ -10,6 +12,7 @@ import ru.otus.domain.User;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class DbServiceUserImpl implements DbServiceUser {
     private static final Logger logger = LoggerFactory.getLogger(DbServiceUserImpl.class);
 
@@ -94,4 +97,5 @@ public class DbServiceUserImpl implements DbServiceUser {
             }
         }
     }
+
 }

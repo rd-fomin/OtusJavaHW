@@ -1,5 +1,7 @@
 package ru.otus.core.cache;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.WeakHashMap;
@@ -7,6 +9,7 @@ import java.util.WeakHashMap;
 /**
  * @author Roman
  */
+@Component
 public class CacheImpl<K, V> implements Cache<K, V> {
     //Надо реализовать эти методы
     private final WeakHashMap<K, V> cache = new WeakHashMap<>();

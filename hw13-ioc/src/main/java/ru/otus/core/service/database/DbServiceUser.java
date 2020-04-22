@@ -1,4 +1,4 @@
-package ru.otus.core.service;
+package ru.otus.core.service.database;
 
 import ru.otus.domain.User;
 
