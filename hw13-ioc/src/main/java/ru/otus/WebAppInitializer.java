@@ -15,7 +15,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{ WebConfig.class };
+        return new Class<?>[]{ WebConfig.class, DatabaseConfig.class };
     }
 
     @Override
@@ -30,6 +30,5 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         encodingFilter.setForceEncoding(true);
         return new Filter[]{ encodingFilter };
     }
-
 
 }

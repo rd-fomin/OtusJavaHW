@@ -1,6 +1,5 @@
 package ru.otus;
 
-import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,15 +11,6 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import ru.otus.core.cache.Cache;
-import ru.otus.core.cache.CacheImpl;
-import ru.otus.core.dao.UserDao;
-import ru.otus.core.dao.UserDaoImpl;
-import ru.otus.core.service.DbServiceUser;
-import ru.otus.core.service.DbServiceUserImpl;
-import ru.otus.core.sessionmanager.SessionManagerHibernate;
-import ru.otus.core.utils.HibernateUtils;
-import ru.otus.domain.User;
 
 @Configuration
 @ComponentScan
@@ -46,52 +36,24 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SpringTemplateEngine templateEngine() {
+    public SpringTemplateEngine templateEngine(SpringResourceTemplateResolver templateResolver) {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.setTemplateResolver(templateResolver);
         return templateEngine;
     }
 
     @Bean
-    public ThymeleafViewResolver viewResolver() {
+    public ThymeleafViewResolver viewResolver(SpringTemplateEngine templateEngine) {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setTemplateEngine(templateEngine());
+        viewResolver.setTemplateEngine(templateEngine);
         viewResolver.setOrder(1);
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
-    }
-
-    @Bean
-    public SessionManagerHibernate sessionManager() {
-        SessionFactory sessionFactory = HibernateUtils.buildSessionFactory("hibernate.cfg.xml", User.class);
-        return new SessionManagerHibernate(sessionFactory);
-    }
-
-    @Bean
-    public UserDao userDao() {
-        return new UserDaoImpl(sessionManager());
-    }
-
-    @Bean
-    public Cache<Long, User> cache() {
-        return new CacheImpl<>();
-    }
-
-    @Bean
-    public DbServiceUser dbServiceUser() {
-        DbServiceUser serviceUser = new DbServiceUserImpl(userDao(), cache());
-        serviceUser.save(new User("Крис Гир", "user1", "11111"));
-        serviceUser.save(new User("Ая Кэш", "user2", "11111"));
-        serviceUser.save(new User("Десмин Боргес", "user3", "11111"));
-        serviceUser.save(new User("Кетер Донохью", "user4", "11111"));
-        serviceUser.save(new User("Стивен Шнайдер", "user5", "11111"));
-        serviceUser.save(new User("Джанет Вэрни", "user6", "11111"));
-        serviceUser.save(new User("Брэндон Смит", "user7", "11111"));
-        return serviceUser;
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/static/");
     }
+
 }
