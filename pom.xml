@@ -33,6 +33,7 @@
         <module>hw10-hibernate</module>
         <module>hw11-cacheengine</module>
         <module>hw12-webserver</module>
+        <module>hw13-ioc</module>
     </modules>
 
     <properties>
