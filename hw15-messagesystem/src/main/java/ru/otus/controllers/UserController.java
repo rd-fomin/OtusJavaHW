@@ -6,23 +6,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.otus.core.service.db.DbServiceUser;
 import ru.otus.domain.User;
+import ru.otus.message.front.FrontendService;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Controller
 public class UserController {
 
-    private final DbServiceUser dbServiceUser;
+    private final FrontendService frontendService;
 
-    public UserController(DbServiceUser dbServiceUser) {
-        this.dbServiceUser = dbServiceUser;
+    public UserController(FrontendService frontendService) {
+        this.frontendService = frontendService;
     }
 
     @GetMapping({"/", "/user/list"})
     public String userListView(Model model) {
-        List<User> users = dbServiceUser.findAll();
+        AtomicReference<List<User>> users = new AtomicReference<>();
+        frontendService.getAllData(users::set);
         model.addAttribute("users", users);
         return "userList";
     }
@@ -35,7 +37,7 @@ public class UserController {
 
     @PostMapping("/user/save")
     public RedirectView userSave(@ModelAttribute User user) {
-        dbServiceUser.save(user);
+//        frontendService.save(user);
         return new RedirectView("/user/list", true);
     }
 
