@@ -25,7 +25,7 @@ public class UserController {
     public String userListView(Model model) {
         AtomicReference<List<User>> users = new AtomicReference<>();
         frontendService.getAllData(users::set);
-        model.addAttribute("users", users);
+        model.addAttribute("users", users.get());
         return "userList";
     }
 
@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping("/user/save")
     public RedirectView userSave(@ModelAttribute User user) {
-//        frontendService.save(user);
+        frontendService.save(user, System.out::println);
         return new RedirectView("/user/list", true);
     }
 

@@ -27,7 +27,7 @@ public class FrontendServiceImpl implements FrontendService {
     }
 
     @Override
-    public void getUserData(long userId, Consumer<String> dataConsumer) {
+    public void getUserData(long userId, Consumer<User> dataConsumer) {
         Message outMsg = msClient.produceMessage(databaseServiceClientName, userId, MessageType.USER_DATA);
         consumerMap.put(outMsg.getId(), dataConsumer);
         msClient.sendMessage(outMsg);
@@ -43,6 +43,13 @@ public class FrontendServiceImpl implements FrontendService {
     @Override
     public void getAllData(Consumer<List<User>> dataConsumer) {
         Message outMsg = msClient.produceMessage(databaseServiceClientName, "all", MessageType.USER_DATA);
+        consumerMap.put(outMsg.getId(), dataConsumer);
+        msClient.sendMessage(outMsg);
+    }
+
+    @Override
+    public void save(User user, Consumer<User> dataConsumer) {
+        Message outMsg = msClient.produceMessage(databaseServiceClientName, user, MessageType.USER_DATA);
         consumerMap.put(outMsg.getId(), dataConsumer);
         msClient.sendMessage(outMsg);
     }
