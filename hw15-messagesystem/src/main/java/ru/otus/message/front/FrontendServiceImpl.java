@@ -28,28 +28,28 @@ public class FrontendServiceImpl implements FrontendService {
 
     @Override
     public void getUserData(long userId, Consumer<User> dataConsumer) {
-        Message outMsg = msClient.produceMessage(databaseServiceClientName, userId, MessageType.USER_DATA);
+        Message outMsg = msClient.produceMessage(databaseServiceClientName, userId, MessageType.GET_BY_ID);
         consumerMap.put(outMsg.getId(), dataConsumer);
         msClient.sendMessage(outMsg);
     }
 
     @Override
-    public void getUserData(String userLogin, Consumer<String> dataConsumer) {
-        Message outMsg = msClient.produceMessage(databaseServiceClientName, userLogin, MessageType.USER_DATA);
+    public void getUserData(String userLogin, Consumer<User> dataConsumer) {
+        Message outMsg = msClient.produceMessage(databaseServiceClientName, userLogin, MessageType.GET_BY_LOGIN);
         consumerMap.put(outMsg.getId(), dataConsumer);
         msClient.sendMessage(outMsg);
     }
 
     @Override
     public void getAllData(Consumer<List<User>> dataConsumer) {
-        Message outMsg = msClient.produceMessage(databaseServiceClientName, "all", MessageType.USER_DATA);
+        Message outMsg = msClient.produceMessage(databaseServiceClientName, null, MessageType.GET_ALL);
         consumerMap.put(outMsg.getId(), dataConsumer);
         msClient.sendMessage(outMsg);
     }
 
     @Override
     public void save(User user, Consumer<User> dataConsumer) {
-        Message outMsg = msClient.produceMessage(databaseServiceClientName, user, MessageType.USER_DATA);
+        Message outMsg = msClient.produceMessage(databaseServiceClientName, user, MessageType.SAVE_USER);
         consumerMap.put(outMsg.getId(), dataConsumer);
         msClient.sendMessage(outMsg);
     }

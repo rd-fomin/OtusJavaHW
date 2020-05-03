@@ -47,14 +47,14 @@ public class DbServiceUserImpl implements DbServiceUser {
     }
 
     @Override
-    public Optional<User> findById(long id) {
+    public Optional<User> findBy(long id) {
         if (cache.get(id) != null) {
             return Optional.ofNullable(cache.get(id));
         }
         try (SessionManager sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                Optional<User> user = userDao.findById(id);
+                Optional<User> user = userDao.findBy(id);
                 sessionManager.commitSession();
                 logger.info("created user: {}", user.orElseThrow());
                 return user;
@@ -67,11 +67,11 @@ public class DbServiceUserImpl implements DbServiceUser {
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
+    public Optional<User> findBy(String login) {
         try (SessionManager sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                Optional<User> user = userDao.findByLogin(login);
+                Optional<User> user = userDao.findBy(login);
                 sessionManager.commitSession();
                 logger.info("created user: {}", user.orElseThrow());
                 return user;

@@ -34,7 +34,6 @@
         <module>hw11-cacheengine</module>
         <module>hw12-webserver</module>
         <module>hw13-ioc</module>
-        <module>hw-di-draft</module>
         <module>hw14-jmm</module>
         <module>hw15-messagesystem</module>
     </modules>

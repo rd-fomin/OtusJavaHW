@@ -34,7 +34,10 @@ public class DatabaseConfig implements WebMvcConfigurer {
     @Bean
     public MsClient databaseMsClient(MessageSystem messageSystem, DbServiceUser dbServiceUser) {
         MsClient databaseMsClient = new MsClientImpl(DATABASE_SERVICE_CLIENT_NAME, messageSystem);
-        databaseMsClient.addHandler(MessageType.USER_DATA, new GetUserDataRequestHandler(dbServiceUser));
+        databaseMsClient.addHandler(MessageType.GET_ALL, new GetUserDataRequestHandler(dbServiceUser));
+        databaseMsClient.addHandler(MessageType.GET_BY_ID, new GetUserDataRequestHandler(dbServiceUser));
+        databaseMsClient.addHandler(MessageType.GET_BY_LOGIN, new GetUserDataRequestHandler(dbServiceUser));
+        databaseMsClient.addHandler(MessageType.SAVE_USER, new GetUserDataRequestHandler(dbServiceUser));
         messageSystem.addClient(databaseMsClient);
         return databaseMsClient;
     }
@@ -43,7 +46,10 @@ public class DatabaseConfig implements WebMvcConfigurer {
     public FrontendService frontendService(MessageSystem messageSystem) {
         MsClient frontendMsClient = new MsClientImpl(FRONTEND_SERVICE_CLIENT_NAME, messageSystem);
         FrontendService frontendService = new FrontendServiceImpl(frontendMsClient, DATABASE_SERVICE_CLIENT_NAME);
-        frontendMsClient.addHandler(MessageType.USER_DATA, new GetUserDataResponseHandler(frontendService));
+        frontendMsClient.addHandler(MessageType.GET_ALL, new GetUserDataResponseHandler(frontendService));
+        frontendMsClient.addHandler(MessageType.GET_BY_ID, new GetUserDataResponseHandler(frontendService));
+        frontendMsClient.addHandler(MessageType.GET_BY_LOGIN, new GetUserDataResponseHandler(frontendService));
+        frontendMsClient.addHandler(MessageType.SAVE_USER, new GetUserDataResponseHandler(frontendService));
         messageSystem.addClient(frontendMsClient);
         return frontendService;
     }

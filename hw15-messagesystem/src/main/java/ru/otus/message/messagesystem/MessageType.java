@@ -1,10 +1,10 @@
 package ru.otus.message.messagesystem;
 
 public enum MessageType {
-    USER_DATA("UserData"),
-    ALL_DATA("AllData"),
-    ONE_DATA("OneData"),
-    SAVE_DATA("SaveData");
+    GET_ALL("GetAll"),
+    GET_BY_ID("GetById"),
+    GET_BY_LOGIN("GetByLogin"),
+    SAVE_USER("SaveUser");
 
     private final String value;
 

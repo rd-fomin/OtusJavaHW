@@ -21,19 +21,60 @@ public class GetUserDataRequestHandler implements RequestHandler {
 
     @Override
     public Optional<Message> handle(Message msg) {
-        if ("all".equals(Serializers.deserialize(msg.getPayload(), String.class))) {
-            List<User> users = dbService.findAll();
-            return Optional.of(new Message(msg.getTo(), msg.getFrom(), msg.getId(), MessageType.USER_DATA.getValue(), Serializers.serialize(users)));
-        } else {
-            long id = -1;
-            id = Serializers.deserialize(msg.getPayload(), Long.class);
-            if (id != -1) {
-                User data = dbService.findById(id).orElseThrow();
-                return Optional.of(new Message(msg.getTo(), msg.getFrom(), msg.getId(), MessageType.USER_DATA.getValue(), Serializers.serialize(data)));
-            } else {
+        switch (msg.getType()) {
+            case "GetAll" : {
+                List<User> users = dbService.findAll();
+                return Optional.of(
+                        new Message(
+                                msg.getTo(),
+                                msg.getFrom(),
+                                msg.getId(),
+                                MessageType.GET_ALL.getValue(),
+                                Serializers.serialize(users)
+                        )
+                );
+            }
+            case "GetById" : {
+                long id = Long.parseLong(Serializers.deserialize(msg.getPayload(), String.class));
+                User user = dbService.findBy(id).orElseThrow();
+                return Optional.of(
+                        new Message(
+                                msg.getTo(),
+                                msg.getFrom(),
+                                msg.getId(),
+                                MessageType.GET_BY_ID.getValue(),
+                                Serializers.serialize(user)
+                        )
+                );
+            }
+            case "GetByLogin" : {
                 String login = Serializers.deserialize(msg.getPayload(), String.class);
-                User data = dbService.findByLogin(login).orElseThrow();
-                return Optional.of(new Message(msg.getTo(), msg.getFrom(), msg.getId(), MessageType.USER_DATA.getValue(), Serializers.serialize(data)));
+                User user = dbService.findBy(login).orElseThrow();
+                return Optional.of(
+                        new Message(
+                                msg.getTo(),
+                                msg.getFrom(),
+                                msg.getId(),
+                                MessageType.GET_BY_LOGIN.getValue(),
+                                Serializers.serialize(user)
+                        )
+                );
+            }
+            case "SaveUser" : {
+                User user = Serializers.deserialize(msg.getPayload(), User.class);
+                dbService.save(user);
+                return Optional.of(
+                        new Message(
+                                msg.getTo(),
+                                msg.getFrom(),
+                                msg.getId(),
+                                MessageType.SAVE_USER.getValue(),
+                                Serializers.serialize(user)
+                        )
+                );
+            }
+            default : {
+                return Optional.empty();
             }
         }
     }

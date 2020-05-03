@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findById(long id) {
+    public Optional<User> findBy(long id) {
         var currentSession = sessionManager.getCurrentSession();
         try {
             return Optional.ofNullable(currentSession.getHibernateSession().find(User.class, id));
@@ -49,7 +49,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
+    public Optional<User> findBy(String login) {
         var currentSession = sessionManager.getCurrentSession();
         try {
             User result = currentSession.getHibernateSession()

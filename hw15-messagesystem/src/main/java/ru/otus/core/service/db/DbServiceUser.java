@@ -9,9 +9,9 @@ public interface DbServiceUser {
 
   long save(User user);
 
-  Optional<User> findById(long id);
+  Optional<User> findBy(long id);
 
-  Optional<User> findByLogin(String login);
+  Optional<User> findBy(String login);
 
   List<User> findAll();
 
