@@ -1,4 +1,4 @@
-package ru.otus.core.service.db;
+package ru.otus.core.service;
 
 import ru.otus.domain.User;
 
@@ -9,9 +9,9 @@ public interface DbServiceUser {
 
   long save(User user);
 
-  Optional<User> findBy(long id);
+  Optional<User> findById(long id);
 
-  Optional<User> findBy(String login);
+  Optional<User> findByLogin(String login);
 
   List<User> findAll();
 

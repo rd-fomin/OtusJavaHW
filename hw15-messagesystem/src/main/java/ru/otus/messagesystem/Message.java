@@ -1,4 +1,4 @@
-package ru.otus.message.messagesystem;
+package ru.otus.messagesystem;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -82,8 +82,8 @@ public class Message {
         return payloadLength;
     }
 
+
     public Optional<UUID> getSourceMessageId() {
         return Optional.ofNullable(sourceMessageId);
     }
-
 }

@@ -1,6 +1,5 @@
 package ru.otus.core.service;
 
-import ru.otus.core.service.db.DbServiceUser;
 import ru.otus.domain.User;
 
 public class DbServiceInit {

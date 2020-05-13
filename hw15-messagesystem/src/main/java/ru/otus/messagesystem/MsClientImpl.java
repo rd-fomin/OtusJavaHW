@@ -1,8 +1,8 @@
-package ru.otus.message.messagesystem;
+package ru.otus.messagesystem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.message.app.Serializers;
+import ru.otus.app.common.Serializers;
 
 import java.util.Map;
 import java.util.Objects;

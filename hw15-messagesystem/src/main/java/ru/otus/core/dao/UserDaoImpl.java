@@ -11,9 +11,6 @@ import ru.otus.domain.User;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author Roman
- */
 @Repository
 public class UserDaoImpl implements UserDao {
     private static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
@@ -38,7 +35,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findBy(long id) {
+    public Optional<User> findById(long id) {
         var currentSession = sessionManager.getCurrentSession();
         try {
             return Optional.ofNullable(currentSession.getHibernateSession().find(User.class, id));
@@ -49,7 +46,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findBy(String login) {
+    public Optional<User> findByLogin(String login) {
         var currentSession = sessionManager.getCurrentSession();
         try {
             User result = currentSession.getHibernateSession()

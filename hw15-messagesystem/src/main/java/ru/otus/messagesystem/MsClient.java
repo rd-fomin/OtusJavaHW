@@ -1,4 +1,4 @@
-package ru.otus.message.messagesystem;
+package ru.otus.messagesystem;
 
 public interface MsClient {
 

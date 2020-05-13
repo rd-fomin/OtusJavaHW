@@ -1,10 +1,7 @@
-package ru.otus.message.messagesystem;
+package ru.otus.messagesystem;
 
 public enum MessageType {
-    GET_ALL("GetAll"),
-    GET_BY_ID("GetById"),
-    GET_BY_LOGIN("GetByLogin"),
-    SAVE_USER("SaveUser");
+    USER_DATA("UserData");
 
     private final String value;
 
@@ -15,5 +12,4 @@ public enum MessageType {
     public String getValue() {
         return value;
     }
-
 }

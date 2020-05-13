@@ -10,9 +10,9 @@ public interface UserDao {
 
     List<User> findAll();
 
-    Optional<User> findBy(long id);
+    Optional<User> findById(long id);
 
-    Optional<User> findBy(String login);
+    Optional<User> findByLogin(String login);
 
     default long save(User user) {
         return 0;

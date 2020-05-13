@@ -1,4 +1,4 @@
-package ru.otus.message.messagesystem;
+package ru.otus.messagesystem;
 
 public interface MessageSystem {
 
@@ -15,6 +15,5 @@ public interface MessageSystem {
     void start();
 
     int currentQueueSize();
-
 }
 

@@ -1,4 +1,4 @@
-package ru.otus.message.messagesystem;
+package ru.otus.messagesystem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +63,7 @@ public final class MessageSystemImpl implements MessageSystem {
 
     @Override
     public void addClient(MsClient msClient) {
-        logger.info("new client:{}", msClient.getName());
+        logger.info("new client: {}", msClient.getName());
         if (clientMap.containsKey(msClient.getName())) {
             throw new IllegalArgumentException("Error. client: " + msClient.getName() + " already exists");
         }
@@ -76,7 +76,7 @@ public final class MessageSystemImpl implements MessageSystem {
         if (removedClient == null) {
             logger.warn("client not found: {}", clientId);
         } else {
-            logger.info("removed client:{}", removedClient);
+            logger.info("removed client: {}", removedClient);
         }
     }
 
@@ -106,7 +106,7 @@ public final class MessageSystemImpl implements MessageSystem {
     }
 
     private void processMessages() {
-        logger.info("msgProcessor started, {}", currentQueueSize());
+        logger.info("msgProcessor started with Q size {}", currentQueueSize());
         while (runFlag.get() || !messageQueue.isEmpty()) {
             try {
                 Message msg = messageQueue.take();
@@ -146,7 +146,7 @@ public final class MessageSystemImpl implements MessageSystem {
             msClient.handle(msg);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            logger.error("message:{}", msg);
+            logger.error("message: {}", msg);
         }
     }
 

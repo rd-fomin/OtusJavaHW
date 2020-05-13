@@ -1,4 +1,4 @@
-package ru.otus.core.service.db;
+package ru.otus.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +11,6 @@ import ru.otus.domain.User;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author Roman
- */
 @Service
 public class DbServiceUserImpl implements DbServiceUser {
     private static final Logger logger = LoggerFactory.getLogger(DbServiceUserImpl.class);
@@ -47,14 +44,14 @@ public class DbServiceUserImpl implements DbServiceUser {
     }
 
     @Override
-    public Optional<User> findBy(long id) {
+    public Optional<User> findById(long id) {
         if (cache.get(id) != null) {
             return Optional.ofNullable(cache.get(id));
         }
         try (SessionManager sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                Optional<User> user = userDao.findBy(id);
+                Optional<User> user = userDao.findById(id);
                 sessionManager.commitSession();
                 logger.info("created user: {}", user.orElseThrow());
                 return user;
@@ -67,11 +64,11 @@ public class DbServiceUserImpl implements DbServiceUser {
     }
 
     @Override
-    public Optional<User> findBy(String login) {
+    public Optional<User> findByLogin(String login) {
         try (SessionManager sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                Optional<User> user = userDao.findBy(login);
+                Optional<User> user = userDao.findByLogin(login);
                 sessionManager.commitSession();
                 logger.info("created user: {}", user.orElseThrow());
                 return user;
