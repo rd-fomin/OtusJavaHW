@@ -23,10 +23,9 @@ public class GetUserDataResponseHandler implements RequestHandler {
     public Optional<Message> handle(Message msg) {
         logger.info("new message:{}", msg);
         try {
-            String userData = Serializers.deserialize(msg.getPayload(), String.class);
+            Long userData = Serializers.deserialize(msg.getPayload(), Long.class);
             UUID sourceMessageId = msg.getSourceMessageId().orElseThrow(() -> new RuntimeException("Not found sourceMsg for message:" + msg.getId()));
-            frontendService.takeConsumer(sourceMessageId, String.class).ifPresent(consumer -> consumer.accept(userData));
-
+            frontendService.takeConsumer(sourceMessageId, Long.class).ifPresent(consumer -> consumer.accept(userData));
         } catch (Exception ex) {
             logger.error("msg:" + msg, ex);
         }

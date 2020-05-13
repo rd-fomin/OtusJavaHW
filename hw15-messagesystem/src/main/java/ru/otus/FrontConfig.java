@@ -1,22 +1,26 @@
 package ru.otus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import ru.otus.db.DBService;
 import ru.otus.db.DBServiceImpl;
 import ru.otus.db.handlers.GetUserDataRequestHandler;
 import ru.otus.front.FrontendService;
 import ru.otus.front.FrontendServiceImpl;
 import ru.otus.front.handlers.GetUserDataResponseHandler;
-import ru.otus.messagesystem.*;
+import ru.otus.messagesystem.MessageSystem;
+import ru.otus.messagesystem.MessageType;
+import ru.otus.messagesystem.MsClient;
+import ru.otus.messagesystem.MsClientImpl;
 
 @Configuration
 @ComponentScan
-@EnableWebSocketMessageBroker
-public class MsConfig implements WebSocketMessageBrokerConfigurer {
+public class FrontConfig {
+    private static final Logger logger = LoggerFactory.getLogger(FrontConfig.class);
+
     private static final String FRONTEND_SERVICE_CLIENT_NAME = "frontendService";
     private static final String DATABASE_SERVICE_CLIENT_NAME = "databaseService";
 
