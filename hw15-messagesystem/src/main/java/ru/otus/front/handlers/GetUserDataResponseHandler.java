@@ -21,13 +21,13 @@ public class GetUserDataResponseHandler implements RequestHandler {
 
     @Override
     public Optional<Message> handle(Message msg) {
-        logger.info("new message:{}", msg);
         try {
             Long userData = Serializers.deserialize(msg.getPayload(), Long.class);
             UUID sourceMessageId = msg.getSourceMessageId().orElseThrow(() -> new RuntimeException("Not found sourceMsg for message:" + msg.getId()));
             frontendService.takeConsumer(sourceMessageId, Long.class).ifPresent(consumer -> consumer.accept(userData));
+            logger.info("New message from {} to {}: {}", msg.getFrom(), msg.getTo(), msg);
         } catch (Exception ex) {
-            logger.error("msg:" + msg, ex);
+            logger.error("Can't create message from {} to {}: {}", msg.getFrom(), msg.getTo(), msg, ex);
         }
         return Optional.empty();
     }

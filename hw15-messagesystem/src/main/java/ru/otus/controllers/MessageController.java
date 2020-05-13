@@ -3,7 +3,6 @@ package ru.otus.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +21,7 @@ public class MessageController {
     }
 
     @MessageMapping("/message")
-    @SendTo("/topic/message")
     public void receiveMessage(Long message){
-        logger.info("message: {}", message);
         frontendService.getUserData(message, s -> logger.info("Received message: {}", s));
     }
 

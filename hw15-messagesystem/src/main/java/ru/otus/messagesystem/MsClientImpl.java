@@ -42,7 +42,6 @@ public class MsClientImpl implements MsClient {
 
     @Override
     public void handle(Message msg) {
-        logger.info("new message:{}", msg);
         try {
             RequestHandler requestHandler = handlers.get(msg.getType());
             if (requestHandler != null) {
