@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 
 public interface FrontendService {
 
-    void getUserData(Long userId, Consumer<Long> dataConsumer);
+    void getUserData(String userId, Consumer<String> dataConsumer);
 
     <T> Optional<Consumer<T>> takeConsumer(UUID sourceMessageId, Class<T> tClass);
 

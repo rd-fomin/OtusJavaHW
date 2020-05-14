@@ -92,7 +92,7 @@ public final class MessageSystemImpl implements MessageSystem {
 
     @Override
     public void dispose() throws InterruptedException {
-        logger.info("now in the messageQueue {} messages", currentQueueSize());
+        logger.info("Now in the messageQueue {} messages", currentQueueSize());
         runFlag.set(false);
         insertStopMessage();
         msgProcessor.shutdown();
@@ -106,16 +106,16 @@ public final class MessageSystemImpl implements MessageSystem {
     }
 
     private void processMessages() {
-        logger.info("msgProcessor started with Q size {}", currentQueueSize());
+        logger.info("MsgProcessor started with Q size {}", currentQueueSize());
         while (runFlag.get() || !messageQueue.isEmpty()) {
             try {
                 Message msg = messageQueue.take();
                 if (msg == Message.VOID_MESSAGE) {
-                    logger.info("received the stop message");
+                    logger.info("Received the stop message");
                 } else {
                     MsClient clientTo = clientMap.get(msg.getTo());
                     if (clientTo == null) {
-                        logger.warn("client not found");
+                        logger.warn("Client not found");
                     } else {
                         msgHandler.submit(() -> handleMessage(clientTo, msg));
                     }

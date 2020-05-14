@@ -26,7 +26,7 @@ public class FrontendServiceImpl implements FrontendService {
     }
 
     @Override
-    public void getUserData(Long userId, Consumer<Long> dataConsumer) {
+    public void getUserData(String userId, Consumer<String> dataConsumer) {
         Message outMsg = msClient.produceMessage(databaseServiceClientName, userId, MessageType.USER_DATA);
         consumerMap.put(outMsg.getId(), dataConsumer);
         msClient.sendMessage(outMsg);

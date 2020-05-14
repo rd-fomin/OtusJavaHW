@@ -22,9 +22,9 @@ public class GetUserDataRequestHandler implements RequestHandler {
 
     @Override
     public Optional<Message> handle(Message msg) {
-        Long id = Serializers.deserialize(msg.getPayload(), Long.class);
-        logger.info("Request message from {} to {} with id = {}", msg.getFrom(), msg.getTo(), id);
-        return Optional.of(new Message(msg.getTo(), msg.getFrom(), msg.getId(), MessageType.USER_DATA.getValue(), Serializers.serialize(id)));
+        String data = Serializers.deserialize(msg.getPayload(), String.class);
+        logger.info("Request message from {} to {} with data: {}", msg.getFrom(), msg.getTo(), data);
+        return Optional.of(new Message(msg.getTo(), msg.getFrom(), msg.getId(), MessageType.USER_DATA.getValue(), Serializers.serialize(data)));
     }
 
 }

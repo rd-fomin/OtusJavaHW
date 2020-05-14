@@ -1,14 +1,16 @@
-let stompClient = Stomp.over(new SockJS('/websocket'));
+const stompClient1 = Stomp.over(new SockJS('/websocket'));
+const stompClient2 = Stomp.over(new SockJS('/websocket'));
 
 function getMessage() {
-    stompClient.connect({}, frame => {
+    stompClient1.connect({}, frame => {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/message', timeMsg => document.getElementById('message').innerHTML = timeMsg.body);
+        stompClient1.subscribe('/topic/message', timeMsg => document.getElementById('message').textContent = timeMsg.body);
     })
 }
 
 function sendMessage() {
-    stompClient.connect({}, () => {
-        stompClient.send('/app/message', {}, 1);
+    stompClient2.connect({}, (frame) => {
+        console.log('Connected: ' + frame);
+        stompClient2.send('/app/messages', {}, 'First message');
     })
 }
