@@ -14,9 +14,7 @@ public interface UserDao {
 
     Optional<User> findByLogin(String login);
 
-    default long save(User user) {
-        return 0;
-    }
+    long save(User user);
 
     SessionManager getSessionManager();
 }

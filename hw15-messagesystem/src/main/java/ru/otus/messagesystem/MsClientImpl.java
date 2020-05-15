@@ -35,7 +35,7 @@ public class MsClientImpl implements MsClient {
     public boolean sendMessage(Message msg) {
         boolean result = messageSystem.newMessage(msg);
         if (!result) {
-            logger.error("the last message was rejected: {}", msg);
+            logger.error("The last message was rejected: {}", msg);
         }
         return result;
     }
@@ -47,7 +47,7 @@ public class MsClientImpl implements MsClient {
             if (requestHandler != null) {
                 requestHandler.handle(msg).ifPresent(this::sendMessage);
             } else {
-                logger.error("handler not found for the message type:{}", msg.getType());
+                logger.error("Handler not found for the message type: {}", msg.getType());
             }
         } catch (Exception ex) {
             logger.error("msg:" + msg, ex);

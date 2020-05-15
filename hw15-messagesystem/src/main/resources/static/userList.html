@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>List of all users</title>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="app.js"></script>
+    <script src="list.user.js"></script>
 </head>
-<body onload="sendMessage();getMessage();" >
+<body onload="getAll();" >
 <div id="message"></div>
 <h3>Users:</h3>
-<table class="users">
+<table id="users">
     <thead>
     <tr>
         <th>ID</th>

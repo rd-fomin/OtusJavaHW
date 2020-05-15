@@ -2,10 +2,12 @@ package ru.otus.front;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.domain.User;
 import ru.otus.messagesystem.Message;
 import ru.otus.messagesystem.MessageType;
 import ru.otus.messagesystem.MsClient;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,8 +28,15 @@ public class FrontendServiceImpl implements FrontendService {
     }
 
     @Override
-    public void getUserData(String userId, Consumer<String> dataConsumer) {
-        Message outMsg = msClient.produceMessage(databaseServiceClientName, userId, MessageType.USER_DATA);
+    public void createUser(User user, Consumer<Long> dataConsumer) {
+        Message outMsg = msClient.produceMessage(databaseServiceClientName, user, MessageType.CREATE_USER);
+        consumerMap.put(outMsg.getId(), dataConsumer);
+        msClient.sendMessage(outMsg);
+    }
+
+    @Override
+    public void getAll(Consumer<List<User>> dataConsumer) {
+        Message outMsg = msClient.produceMessage(databaseServiceClientName, "getAll", MessageType.GET_ALL);
         consumerMap.put(outMsg.getId(), dataConsumer);
         msClient.sendMessage(outMsg);
     }
@@ -36,7 +45,7 @@ public class FrontendServiceImpl implements FrontendService {
     public <T> Optional<Consumer<T>> takeConsumer(UUID sourceMessageId, Class<T> tClass) {
         Consumer<T> consumer = (Consumer<T>) consumerMap.remove(sourceMessageId);
         if (consumer == null) {
-            logger.warn("consumer not found for:{}", sourceMessageId);
+            logger.warn("consumer not found for: {}", sourceMessageId);
             return Optional.empty();
         }
         return Optional.of(consumer);

@@ -63,7 +63,7 @@ public final class MessageSystemImpl implements MessageSystem {
 
     @Override
     public void addClient(MsClient msClient) {
-        logger.info("new client: {}", msClient.getName());
+        logger.info("New client: {}", msClient.getName());
         if (clientMap.containsKey(msClient.getName())) {
             throw new IllegalArgumentException("Error. client: " + msClient.getName() + " already exists");
         }
@@ -74,9 +74,9 @@ public final class MessageSystemImpl implements MessageSystem {
     public void removeClient(String clientId) {
         MsClient removedClient = clientMap.remove(clientId);
         if (removedClient == null) {
-            logger.warn("client not found: {}", clientId);
+            logger.warn("Client not found: {}", clientId);
         } else {
-            logger.info("removed client: {}", removedClient);
+            logger.info("Removed client: {}", removedClient);
         }
     }
 
@@ -85,7 +85,7 @@ public final class MessageSystemImpl implements MessageSystem {
         if (runFlag.get()) {
             return messageQueue.offer(msg);
         } else {
-            logger.warn("MS is being shutting down... rejected:{}", msg);
+            logger.warn("MS is being shutting down... rejected: {}", msg);
             return false;
         }
     }
@@ -146,7 +146,7 @@ public final class MessageSystemImpl implements MessageSystem {
             msClient.handle(msg);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            logger.error("message: {}", msg);
+            logger.error("Message: {}", msg);
         }
     }
 

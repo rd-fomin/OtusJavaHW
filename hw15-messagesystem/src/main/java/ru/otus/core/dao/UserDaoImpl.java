@@ -64,10 +64,9 @@ public class UserDaoImpl implements UserDao {
     public long save(User user) throws UserDaoException {
         var currentSession = sessionManager.getCurrentSession();
         try {
-            long id = user.getId();
             Session hibernateSession = currentSession.getHibernateSession();
-            hibernateSession.merge(user);
-            return id;
+            User savedUser = (User) hibernateSession.merge(user);
+            return savedUser.getId();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new UserDaoException(e);
@@ -75,7 +74,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public SessionManager getSessionManager() {
+    public synchronized SessionManager getSessionManager() {
         return sessionManager;
     }
 

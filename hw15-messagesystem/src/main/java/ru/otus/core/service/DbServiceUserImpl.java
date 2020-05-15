@@ -33,7 +33,7 @@ public class DbServiceUserImpl implements DbServiceUser {
                 if (cache.get(userId) == null) {
                     cache.put(userId, user);
                 }
-                logger.info("saved user with id: {}", userId);
+                logger.info("Save user with id: {}", userId);
                 return userId;
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);

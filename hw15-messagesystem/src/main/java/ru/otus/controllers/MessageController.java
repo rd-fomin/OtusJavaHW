@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import ru.otus.domain.User;
 import ru.otus.front.FrontendService;
 
 @Controller
@@ -19,11 +20,14 @@ public class MessageController {
         this.frontendService = frontendService;
     }
 
-    @MessageMapping("/messages")
-    public void receiveMessage(String message){
-        frontendService.getUserData(message, s -> {
+    @MessageMapping("/messages/create")
+    public void createUser(User user) {
+        frontendService.createUser(user, s -> {
             logger.info("Received message: {}", s);
-            template.convertAndSend("/topic/message", s);
+        });
+        frontendService.getAll(x -> {
+            logger.info("Users list: {}", x);
+            template.convertAndSend("/topic/message", x);
         });
     }
 

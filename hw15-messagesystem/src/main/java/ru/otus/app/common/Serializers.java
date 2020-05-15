@@ -11,9 +11,7 @@ import java.io.ObjectOutputStream;
 public class Serializers {
     private static final Logger logger = LoggerFactory.getLogger(Serializers.class);
 
-    private Serializers() {
-
-    }
+    private Serializers() {  }
 
     public static byte[] serialize(Object data) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
