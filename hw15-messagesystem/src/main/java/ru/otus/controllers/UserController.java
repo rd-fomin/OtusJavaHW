@@ -1,24 +1,22 @@
 package ru.otus.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-//@Controller
+@Controller
 public class UserController {
 
-//    @GetMapping()
+    @GetMapping({"/", "/list"})
     public String userListView(Model model) {
-        return "userList.html";
+//        List<User> users = new ArrayList<>();
+//        model.addAttribute("users", users);
+        return "userList";
     }
 
-//    @GetMapping()
+    @GetMapping("/user/create")
     public String userCreateView() {
-        return "userCreate.html";
+        return "userCreate";
     }
-
-    /*@PostMapping("/user/save")
-    public RedirectView userSave(@ModelAttribute User user) {
-        dbServiceUser.save(user);
-        return new RedirectView("/list", true);
-    }*/
 
 }

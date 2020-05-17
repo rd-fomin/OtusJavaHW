@@ -10,7 +10,7 @@
 <body onload="getAll();" >
 <div id="message"></div>
 <h3>Users:</h3>
-<table id="users">
+<table>
     <thead>
     <tr>
         <th>ID</th>
@@ -19,14 +19,7 @@
         <th>Password</th>
     </tr>
     </thead>
-    <tbody>
-    <!--<tr th:each="user : ${users}">
-        <td th:text="${user?.id}"></td>
-        <td th:text="${user?.name}"></td>
-        <td th:text="${user?.login}"></td>
-        <td th:text="${user?.password}"></td>
-    </tr>-->
-    </tbody>
+    <tbody id="users"></tbody>
 </table>
 <a href="userCreate.html">New user</a>
 

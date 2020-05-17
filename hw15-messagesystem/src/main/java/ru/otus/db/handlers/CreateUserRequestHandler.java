@@ -11,8 +11,7 @@ import ru.otus.messagesystem.RequestHandler;
 
 import java.util.Optional;
 
-
-  public class CreateUserRequestHandler implements RequestHandler {
+public class CreateUserRequestHandler implements RequestHandler {
       public static final Logger logger = LoggerFactory.getLogger(CreateUserRequestHandler.class);
 
       private final DbServiceUser dbService;
@@ -29,4 +28,4 @@ import java.util.Optional;
           return Optional.of(new Message(msg.getTo(), msg.getFrom(), msg.getId(), MessageType.CREATE_USER.getValue(), Serializers.serialize(id)));
       }
 
-  }
+}

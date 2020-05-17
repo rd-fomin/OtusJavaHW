@@ -74,7 +74,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public synchronized SessionManager getSessionManager() {
+    public SessionManager getSessionManager() {
         return sessionManager;
     }
 

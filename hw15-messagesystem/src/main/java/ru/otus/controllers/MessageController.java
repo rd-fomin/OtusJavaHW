@@ -22,12 +22,12 @@ public class MessageController {
 
     @MessageMapping("/messages/create")
     public void createUser(User user) {
-        frontendService.createUser(user, s -> {
-            logger.info("Received message: {}", s);
-        });
-        frontendService.getAll(x -> {
-            logger.info("Users list: {}", x);
-            template.convertAndSend("/topic/message", x);
+        frontendService.createUser(user, id -> {
+            logger.info("Received message with id = {}", id);
+            frontendService.getAll(users -> {
+                logger.info("Users list: {}", users);
+                template.convertAndSend("/topic/message", users);
+            });
         });
     }
 

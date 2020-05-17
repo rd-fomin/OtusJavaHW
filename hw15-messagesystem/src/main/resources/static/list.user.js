@@ -10,9 +10,22 @@ class User {
 }
 
 function getAll() {
-    const stompClient1 = Stomp.over(new SockJS('/websocket'));
-    stompClient1.connect({}, frame => {
+    const stompClient = Stomp.over(new SockJS('/websocket'));
+    stompClient.connect({}, frame => {
         console.log('Connected: ' + frame);
-        stompClient1.subscribe('/topic/message', timeMsg => console.log(timeMsg.body));
+        stompClient.subscribe('/topic/message', timeMsg => {
+            const users = JSON.parse(timeMsg.body);
+            console.log(users);
+            let html = '';
+            users.forEach(function (user, i, array) {
+                html += '<tr>';
+                html += '<td>' + user.id + '</td>';
+                html += '<td>' + user.name + '</td>';
+                html += '<td>' + user.login + '</td>';
+                html += '<td>' + user.password + '</td>';
+                html += '</tr>';
+            });
+            document.querySelector('#users').innerHTML = html;
+        });
     })
 }
