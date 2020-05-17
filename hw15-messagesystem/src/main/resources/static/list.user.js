@@ -13,19 +13,23 @@ function getAll() {
     const stompClient = Stomp.over(new SockJS('/websocket'));
     stompClient.connect({}, frame => {
         console.log('Connected: ' + frame);
+        stompClient.send('/app/messages/list', {}, 'getAll');
         stompClient.subscribe('/topic/message', timeMsg => {
-            const users = JSON.parse(timeMsg.body);
-            console.log(users);
-            let html = '';
-            users.forEach(function (user, i, array) {
-                html += '<tr>';
-                html += '<td>' + user.id + '</td>';
-                html += '<td>' + user.name + '</td>';
-                html += '<td>' + user.login + '</td>';
-                html += '<td>' + user.password + '</td>';
-                html += '</tr>';
-            });
-            document.querySelector('#users').innerHTML = html;
+            if (timeMsg.body === 'createUser') {
+                stompClient.send('/app/messages/list', {}, 'getAll');
+            } else {
+                const users = JSON.parse(timeMsg.body);
+                let html = '';
+                users.forEach(user => {
+                    html += '<tr>';
+                    html += `<td>${user.id}</td>`;
+                    html += `<td>${user.name}</td>`;
+                    html += `<td>${user.login}</td>`;
+                    html += `<td>${user.password}</td>`;
+                    html += '</tr>';
+                });
+                document.querySelector('#tbody_users').innerHTML = html;
+            }
         });
     })
 }

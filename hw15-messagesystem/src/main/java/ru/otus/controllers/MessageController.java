@@ -24,10 +24,15 @@ public class MessageController {
     public void createUser(User user) {
         frontendService.createUser(user, id -> {
             logger.info("Received message with id = {}", id);
-            frontendService.getAll(users -> {
-                logger.info("Users list: {}", users);
-                template.convertAndSend("/topic/message", users);
-            });
+            template.convertAndSend("/topic/message", "createUser");
+        });
+    }
+
+    @MessageMapping("/messages/list")
+    public void listUser(String getAll) {
+        frontendService.getAll(getAll, users -> {
+            logger.info("Received message with list: {}", users);
+            template.convertAndSend("/topic/message", users);
         });
     }
 

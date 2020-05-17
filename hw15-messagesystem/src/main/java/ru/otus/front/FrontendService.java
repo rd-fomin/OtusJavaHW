@@ -12,7 +12,7 @@ public interface FrontendService {
 
     void createUser(User user, Consumer<Long> dataConsumer);
 
-    void getAll(Consumer<List<User>> dataConsumer);
+    void getAll(String getAll, Consumer<List<User>> dataConsumer);
 
     <T> Optional<Consumer<T>> takeConsumer(UUID sourceMessageId, Class<T> tClass);
 

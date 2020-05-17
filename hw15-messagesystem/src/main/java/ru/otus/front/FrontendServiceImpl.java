@@ -35,8 +35,8 @@ public class FrontendServiceImpl implements FrontendService {
     }
 
     @Override
-    public void getAll(Consumer<List<User>> dataConsumer) {
-        Message outMsg = msClient.produceMessage(databaseServiceClientName, "getAll", MessageType.GET_ALL);
+    public void getAll(String getAll, Consumer<List<User>> dataConsumer) {
+        Message outMsg = msClient.produceMessage(databaseServiceClientName, getAll, MessageType.GET_ALL);
         consumerMap.put(outMsg.getId(), dataConsumer);
         msClient.sendMessage(outMsg);
     }
@@ -50,4 +50,5 @@ public class FrontendServiceImpl implements FrontendService {
         }
         return Optional.of(consumer);
     }
+
 }
