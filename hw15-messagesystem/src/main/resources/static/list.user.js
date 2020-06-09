@@ -1,14 +1,3 @@
-class User {
-    name
-    login
-    password
-    constructor (name, login, password) {
-        this.name = name;
-        this.login = login;
-        this.password = password;
-    }
-}
-
 function getAll() {
     const stompClient = Stomp.over(new SockJS('/websocket'));
     stompClient.connect({}, frame => {

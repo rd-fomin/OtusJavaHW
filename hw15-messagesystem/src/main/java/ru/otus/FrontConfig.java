@@ -1,11 +1,7 @@
 package ru.otus;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import ru.otus.core.service.DbServiceUser;
-import ru.otus.db.handlers.CreateUserRequestHandler;
-import ru.otus.db.handlers.GetAllRequestHandler;
 import ru.otus.front.FrontendService;
 import ru.otus.front.FrontendServiceImpl;
 import ru.otus.front.handlers.CreateUserResponseHandler;
@@ -16,19 +12,9 @@ import ru.otus.messagesystem.MsClient;
 import ru.otus.messagesystem.MsClientImpl;
 
 @Configuration
-@ComponentScan
 public class FrontConfig {
     private static final String FRONTEND_SERVICE_CLIENT_NAME = "frontendService";
     private static final String DATABASE_SERVICE_CLIENT_NAME = "databaseService";
-
-    @Bean
-    public MsClient databaseMsClient(MessageSystem messageSystem, DbServiceUser dbService) {
-        MsClient databaseMsClient = new MsClientImpl(DATABASE_SERVICE_CLIENT_NAME, messageSystem);
-        databaseMsClient.addHandler(MessageType.CREATE_USER, new CreateUserRequestHandler(dbService));
-        databaseMsClient.addHandler(MessageType.GET_ALL, new GetAllRequestHandler(dbService));
-        messageSystem.addClient(databaseMsClient);
-        return databaseMsClient;
-    }
 
     @Bean
     public FrontendService frontendService(MessageSystem messageSystem) {
