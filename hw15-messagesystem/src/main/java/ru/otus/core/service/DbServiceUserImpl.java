@@ -1,8 +1,7 @@
-package ru.otus.core.service.database;
+package ru.otus.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.otus.core.cache.Cache;
 import ru.otus.core.dao.UserDao;
@@ -34,7 +33,7 @@ public class DbServiceUserImpl implements DbServiceUser {
                 if (cache.get(userId) == null) {
                     cache.put(userId, user);
                 }
-                logger.info("saved user with id: {}", userId);
+                logger.info("Save user with id: {}", userId);
                 return userId;
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);

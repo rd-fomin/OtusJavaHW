@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.otus.core.service.database.DbServiceUser;
+import ru.otus.core.service.db.DbServiceUser;
 import ru.otus.domain.User;
 
 import java.util.List;

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of all users</title>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="list.user.js"></script>
+</head>
+<body onload="getAll();" >
+<h3>Users:</h3>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Login</th>
+        <th>Password</th>
+    </tr>
+    </thead>
+    <tbody id="tbody_users"></tbody>
+</table>
+<a href="userCreate.html">New user</a>
+
+</body>
+
+</html>

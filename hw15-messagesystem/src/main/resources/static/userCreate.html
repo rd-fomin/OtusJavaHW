@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Create user</title>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="create.user.js"></script>
+</head>
+<body>
+
+<form id="sendData" accept-charset="utf-8" >
+    <h1>New User:</h1>
+    <div class="row">
+        <label for="name-input">Name:</label>
+        <input id="name-input" name="name" type="text" /><br><br>
+        <label for="login-input">Login:</label>
+        <input id="login-input" name="login" type="text" /><br><br>
+        <label for="password-input">Password:</label>
+        <input id="password-input" name="password" type="password" /><br><br>
+    </div>
+    <div class="row">
+        <button type="submit" onclick="sendMessage(); return false;">Save</button>
+    </div>
+</form>
+
+</body>
+</html>
