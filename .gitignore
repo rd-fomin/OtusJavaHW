@@ -7,11 +7,6 @@
 # BlueJ files
 *.ctxt
 
-#Idea files
-*.iml
-.idea
-target
-
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -26,4 +21,24 @@ target
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-dependency-reduced-pom.xml
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+out
+
+#Idea
+*.iml
+*.iws
+*.ipr
+*.idea
+generated_tests
+
+
+grpc
+generated
+
+gradlew
+gradlew.*
