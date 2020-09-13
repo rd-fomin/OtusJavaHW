@@ -3,7 +3,7 @@
  */
 
 allprojects {
-    group = 'ru.otus'
+    group = 'ru.ru.otus'
     version = '1.0-SNAPSHOT'
 }
 
