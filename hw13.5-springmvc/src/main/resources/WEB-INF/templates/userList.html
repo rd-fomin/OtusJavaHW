@@ -68,12 +68,12 @@
 </head>
 <body>
     <h3>Пользователи:</h3>
-
     <table class="users">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Password</th>
             </tr>
         </thead>
         <tbody>
@@ -85,41 +85,6 @@
         </tbody>
     </table>
     <a th:href="@{/user/create}" href="userCreate.html">New user</a>
-
-    <br/><br/>
-    <h3>Тест View без контроллера:</h3>
-    <a th:href="@{/no-handler-view}">Перейти на View без контроллера</a>
-
-
-    <br/><br/>
-    <h3>API:</h3>
-
-    <a th:href="@{/api/user/2}">Запрос пользователя с id = 2</a>
-    <a th:href="@{/api/user/random}">Запрос случайного пользователя</a>
-    <br/>
-    <br/>
-
-    <div class="controls-container">
-        <input type="text" id = "userIdTextBox" value="3" placeholder="Введите id пользователя" >
-        <button onclick="getUser('api/user/', 'userIdTextBox')">Получить пользователя по id</button>
-    </div>
-    <div class="controls-container">
-        <select id="usersNamesSelect">
-            <option value="Крис Гир">Крис Гир</option>
-            <option value="Ая Кэш" selected>Ая Кэш</option>
-            <option value="Десмин Боргес">Десмин Боргес</option>
-            <option value="Кетер Донохью">Кетер Донохью</option>
-            <option value="Стивен Шнайдер">Стивен Шнайдер</option>
-            <option value="Джанет Вэрни">Джанет Вэрни</option>
-            <option value="Брэндон Смит">Брэндон Смит</option>
-        </select>
-        <button onclick="getUser('api/user?name=', 'usersNamesSelect')">Получить пользователя по имени</button>
-    </div>
-    <div class="controls-container single-button-container">
-        <button onclick="getUser('api/user/random')">Получить случайного пользователя</button>
-    </div>
-
     <pre id = "userDataContainer"></pre>
-
 </body>
 </html>
