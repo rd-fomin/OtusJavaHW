@@ -56,12 +56,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     }
 
     @Override
-    public <C> C getAppComponent(String componentName) {
-        try {
-            getAppComponent((Class<C>) Class.forName(componentName));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public <C> C getAppComponent(String componentName) throws ClassNotFoundException {
+        return getAppComponent((Class<C>) Class.forName(componentName));
     }
 }
