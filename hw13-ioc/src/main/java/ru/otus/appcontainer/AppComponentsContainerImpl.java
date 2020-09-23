@@ -3,10 +3,6 @@ package ru.otus.appcontainer;
 import ru.otus.appcontainer.api.AppComponent;
 import ru.otus.appcontainer.api.AppComponentsContainer;
 import ru.otus.appcontainer.api.AppComponentsContainerConfig;
-import ru.otus.services.EquationPreparer;
-import ru.otus.services.GameProcessorImpl;
-import ru.otus.services.IOService;
-import ru.otus.services.PlayerService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,26 +13,49 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     private final List<Object> appComponents = new ArrayList<>();
     private final Map<String, Object> appComponentsByName = new HashMap<>();
 
-    public AppComponentsContainerImpl(Class<?> initialConfigClass) {
+    public AppComponentsContainerImpl(Class<?> initialConfigClass) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         processConfig(initialConfigClass);
     }
 
-    private void processConfig(Class<?> configClass) {
+    private void processConfig(Class<?> configClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         checkConfigClass(configClass);
         // You code here...
         List<Method> methods = Arrays.asList(configClass.getDeclaredMethods());
         methods.sort(Comparator.comparing(method -> method.getDeclaredAnnotation(AppComponent.class).order()));
-        Map<String, Method> methodMap = new HashMap<>();
-        methods.forEach(method -> methodMap.put(method.getName(), method));
-        try {
-            Object obj = configClass.getConstructor().newInstance();
-            EquationPreparer eP = (EquationPreparer) methodMap.get("equationPreparer").invoke(obj);
-            IOService ioService = (IOService) methodMap.get("ioService").invoke(obj);
-            PlayerService playerService = (PlayerService) methodMap.get("playerService").invoke(obj, ioService);
-            GameProcessorImpl gameProcessor = (GameProcessorImpl) methodMap.get("gameProcessor").invoke(obj, ioService, playerService, eP);
-            appComponents.add(gameProcessor);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
+
+        Object objForMethod = configClass.getConstructor().newInstance();
+
+        methods.forEach(method -> {
+            try {
+                createObject(method, objForMethod);
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
+                e.printStackTrace();
+            }
+        });
+
+    }
+
+    private void createObject(Method methodFromObj, Object objForMethod) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class<?>[] parameters = methodFromObj.getParameterTypes();
+        if (parameters.length == 0) {
+            Object appComponent = methodFromObj.invoke(objForMethod);
+            appComponents.add(appComponent);
+            appComponentsByName.put(methodFromObj.getName(), appComponent);
+        } else {
+            List<Object> objects = new ArrayList<>();
+            for (Class<?> parameter : parameters) {
+                Object obj = appComponents.stream()
+                        .filter(o -> Arrays.stream(o.getClass().getInterfaces())
+                                .findFirst()
+                                .filter(o1 -> o1.getCanonicalName().equals(parameter.getCanonicalName()))
+                                .isPresent()
+                        )
+                        .findFirst().orElseThrow();
+                objects.add(obj);
+            }
+            Object appComponent = methodFromObj.invoke(objForMethod, objects.toArray());
+            appComponents.add(appComponent);
+            appComponentsByName.put(methodFromObj.getName(), appComponent);
         }
     }
 
@@ -57,6 +76,6 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
 
     @Override
     public <C> C getAppComponent(String componentName) throws ClassNotFoundException {
-        return getAppComponent((Class<C>) Class.forName(componentName));
+        return (C) appComponentsByName.get(componentName);
     }
 }

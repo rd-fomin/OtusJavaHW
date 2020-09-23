@@ -17,7 +17,7 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         AppComponentsContainer container = new AppComponentsContainerImpl(AppConfig.class);
-        GameProcessor gameProcessor = container.getAppComponent("ru.otus.services.GameProcessor");
+        GameProcessor gameProcessor = container.getAppComponent("gameProcessor");
         gameProcessor.startGame();
     }
 }
