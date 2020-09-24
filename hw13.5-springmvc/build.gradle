@@ -1,0 +1,31 @@
+plugins {
+    id 'war'
+}
+
+group 'ru.otus'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_13
+targetCompatibility = JavaVersion.VERSION_13
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("com.h2database:h2:1.4.200")
+    implementation("org.hibernate:hibernate-core:5.4.21.Final")
+    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("org.springframework:spring-context:5.2.9.RELEASE")
+    implementation("org.springframework:spring-webmvc:5.2.9.RELEASE")
+    implementation("org.springframework:spring-web:5.2.9.RELEASE")
+    implementation("org.thymeleaf:thymeleaf:3.0.11.RELEASE")
+    implementation("org.thymeleaf:thymeleaf-spring5:3.0.11.RELEASE")
+    providedCompile("javax.servlet:javax.servlet-api:4.0.1")
+    testCompile('junit:junit:4.12')
+}
+
+war {
+    archiveName 'webapp.war'
+    from 'src/main/resources'
+}

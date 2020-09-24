@@ -65,7 +65,7 @@ public class Main {
         Collections.copy(strings, strings1);
         printArray(strings);
 
-        Collections.sort(strings, String::compareToIgnoreCase);
+//        Collections.sort(strings, String::compareToIgnoreCase);
         printArray(strings);
 
 //        String[] strings1 = new String[5];

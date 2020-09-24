@@ -19,3 +19,5 @@ include(':hw13-ioc')
 include(':hw14-jmm')
 include(':hw15-messagesystem')
 include(':hw16-messageserver')
+include 'hw13.5-springmvc'
+
