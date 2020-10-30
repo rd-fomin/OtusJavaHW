@@ -1,13 +1,18 @@
 package ru.otus.processor;
 
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import ru.otus.Message;
+import ru.otus.time.TimeProvider;
+import ru.otus.time.TimeProviderTest;
 
 class ExceptionProcessorTest {
 
-    @RepeatedTest(2)
+    @Test
     void process() {
-        Processor processor = new ExceptionProcessor(new ProcessorSwap11and12());
+        TimeProvider timeProvider = TimeProviderTest.newInstance();
+        timeProvider.getCurrentDate();
+        Processor processor = new ExceptionProcessor(new ProcessorSwap11and12(), timeProvider);
         Message message = processor.process(new Message.Builder()
                 .field1("field1")
                 .field11("field11")
@@ -15,10 +20,5 @@ class ExceptionProcessorTest {
                 .build()
         );
         System.out.println(message);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

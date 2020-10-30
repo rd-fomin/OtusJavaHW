@@ -4,6 +4,9 @@ import ru.otus.handler.ComplexProcessor;
 import ru.otus.listener.ListenerHistory;
 import ru.otus.listener.ListenerPrinter;
 import ru.otus.processor.*;
+import ru.otus.time.TimeProvider;
+import ru.otus.time.TimeProviderTest;
+import ru.otus.time.TimeProviderWork;
 
 import java.util.List;
 
@@ -22,7 +25,8 @@ public class HomeWork {
            по аналогии с Demo.class
            из элеменов "to do" создать new ComplexProcessor и обработать сообщение
          */
-        List<Processor> processors = List.of(new ExceptionProcessor(new ProcessorSwap11and12()));
+        TimeProvider timeProvider = TimeProviderWork.newInstance();
+        List<Processor> processors = List.of(new ExceptionProcessor(new ProcessorSwap11and12(), timeProvider));
 
         var complexProcessor = new ComplexProcessor(processors, (ex) -> {});
         var listenerPrinter = new ListenerPrinter();
